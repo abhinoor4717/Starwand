@@ -1,0 +1,6 @@
+[submodule "Starwand/vendor/raylib"]
+	path = Starwand/vendor/raylib
+	url = https://github.com/abhinoor4717/raylib.git
+[submodule "Starwand/vendor/spdlog"]
+	path = Starwand/vendor/spdlog
+	url = https://github.com/abhinoor4717/spdlog.git
