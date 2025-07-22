@@ -19,7 +19,8 @@ namespace Starwand {
     class STARWAND_API WindowClosedEvent : public WindowEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::WindowClosed; }
+        static EventType GetStaticType() { return EventType::WindowClosed; }
+        EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowClosedEvent"; }
     protected:
         WindowClosedEvent() {};
@@ -28,7 +29,8 @@ namespace Starwand {
     class STARWAND_API WindowMaximizedEvent : public WindowEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::WindowMaximized; }
+        static EventType GetStaticType() { return EventType::WindowMaximized; }
+        EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowMaximizedEvent"; }
     protected:
         WindowMaximizedEvent() {};
@@ -37,7 +39,8 @@ namespace Starwand {
     class STARWAND_API WindowMinimizedEvent : public WindowEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::WindowMinimized; }
+        static EventType GetStaticType() { return EventType::WindowMinimized; }
+        EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowMinimizedEvent"; }
     protected:
         WindowMinimizedEvent() {};
@@ -46,7 +49,8 @@ namespace Starwand {
     class STARWAND_API WindowResizedEvent : public WindowEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::WindowResized; }
+        static EventType GetStaticType() { return EventType::WindowResized; }
+        EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowResizedEvent: " + std::to_string(m_Width) + ", " + std::to_string(m_Height); }
     protected:
         WindowResizedEvent(int w, int h)
@@ -58,7 +62,8 @@ namespace Starwand {
     class STARWAND_API WindowFocusGainedEvent : public WindowEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::WindowFocusGained; }
+        static EventType GetStaticType() { return EventType::WindowFocusGained; }
+        EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowFocusGainedEvent"; }
     protected:
         WindowFocusGainedEvent() {};
@@ -67,7 +72,8 @@ namespace Starwand {
     class STARWAND_API WindowFocusLostEvent : public WindowEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::WindowFocusLost; }
+        static EventType GetStaticType() { return EventType::WindowFocusLost; }
+        EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowFocusLostEvent"; }
     protected:
         WindowFocusLostEvent() {};

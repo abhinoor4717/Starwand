@@ -3,6 +3,9 @@
 #include "Core.h"
 #include "Events.h"
 
+#include "Input.h"
+#include "MouseCodes.h"
+
 namespace Starwand {
 
     class Window;
@@ -21,58 +24,66 @@ namespace Starwand {
     public:
         inline virtual EventType GetEventType() const = 0;
         inline virtual std::string ToString() const = 0;
-        inline int GetMouseButton() const { return m_MouseButton; }
+        inline Input::MouseButton GetMouseButton() const { return m_MouseButton; }
+        inline int GetX() { return m_X; }
+        inline int GetY() { return m_Y; }
     protected:
-        MouseButtonEvent(int button)
-            : m_MouseButton(button) {}
+        MouseButtonEvent(int x, int y, Input::MouseButton button)
+            : m_X(x), m_Y(y), m_MouseButton(button) {}
     private:
-        int m_MouseButton;
+        int m_X, m_Y;
+        Input::MouseButton m_MouseButton;
     };
 
     class STARWAND_API MouseButtonPressedEvent : public MouseButtonEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::MouseButtonPressed; };
-        std::string ToString() const { return "MouseButtonPressedEvent: " + std::to_string(GetMouseButton()); }
+        static EventType GetStaticType() { return EventType::MouseButtonPressed; }
+        EventType GetEventType() const { return GetStaticType(); }
+        std::string ToString() const { return "MouseButtonPressedEvent: " + std::string(Input::MouseButtonToString(GetMouseButton())) + " (" + std::to_string(Input::ToRawMouseButton(GetMouseButton())) + ")"; }
     protected:
-        MouseButtonPressedEvent(int button)
-            : MouseButtonEvent(button) {}
+        MouseButtonPressedEvent(int x, int y, Input::MouseButton button)
+            : MouseButtonEvent(x, y, button) {}
     };
 
     class STARWAND_API MouseButtonReleasedEvent : public MouseButtonEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::MouseButtonReleased; };
-        std::string ToString() const { return "MouseButtonReleasedEvent: " + std::to_string(GetMouseButton()); }
+        static EventType GetStaticType() { return EventType::MouseButtonReleased; }
+        EventType GetEventType() const { return GetStaticType(); };
+        std::string ToString() const { return "MouseButtonReleasedEvent: " + std::string(Input::MouseButtonToString(GetMouseButton())) + " (" + std::to_string(Input::ToRawMouseButton(GetMouseButton())) + ")"; }
     protected:
-        MouseButtonReleasedEvent(int button)
-            : MouseButtonEvent(button) {}
+        MouseButtonReleasedEvent(int x, int y, Input::MouseButton button)
+            : MouseButtonEvent(x, y, button) {}
     };
 
     class STARWAND_API MouseButtonDownEvent : public MouseButtonEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::MouseButtonDown; };
-        std::string ToString() const { return "MouseButtonDownEvent: " + std::to_string(GetMouseButton()); }
+        static EventType GetStaticType() { return EventType::MouseButtonDown; }
+        EventType GetEventType() const { return GetStaticType(); };
+        std::string ToString() const { return "MouseButtonDownEvent: " + std::string(Input::MouseButtonToString(GetMouseButton())) + " (" + std::to_string(Input::ToRawMouseButton(GetMouseButton())) + ")"; }
     protected:
-        MouseButtonDownEvent(int button)
-            : MouseButtonEvent(button) {}
+        MouseButtonDownEvent(int x, int y, Input::MouseButton button)
+            : MouseButtonEvent(x, y, button) {}
     };
 
     class STARWAND_API MouseButtonUpEvent : public MouseButtonEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::MouseButtonUp; };
-        std::string ToString() const { return "MouseButtonUpEvent: " + std::to_string(GetMouseButton()); }
+        static EventType GetStaticType() { return EventType::MouseButtonUp; }
+        EventType GetEventType() const { return GetStaticType(); };
+        std::string ToString() const { return "MouseButtonUpEvent: " + std::string(Input::MouseButtonToString(GetMouseButton())) + " (" + std::to_string(Input::ToRawMouseButton(GetMouseButton())) + ")"; }
     protected:
-        MouseButtonUpEvent(int button)
-            : MouseButtonEvent(button) {}
+        MouseButtonUpEvent(int x, int y, Input::MouseButton button)
+            : MouseButtonEvent(x, y, button) {}
     };
 
     class STARWAND_API MouseMovedEvent : public MouseEvent {
         friend class Window;
     public:
-        inline EventType GetEventType() const { return EventType::MouseMoved; }
+        static EventType GetStaticType() { return EventType::MouseMoved; }
+        inline EventType GetEventType() const { return GetStaticType(); }
         inline std::string ToString() const { return "MouseMovedEvent: " + std::to_string(m_MouseX) + ", " + std::to_string(m_MouseY); }
         inline int GetX() const { return m_MouseX; }
         inline int GetY() const { return m_MouseY; }
@@ -86,7 +97,8 @@ namespace Starwand {
     class STARWAND_API MouseWheelEvent : public MouseEvent {
         friend class Window;
     public:
-        inline EventType GetEventType() const { return EventType::MouseWheel; }
+        static EventType GetStaticType() { return EventType::MouseWheel; }
+        inline EventType GetEventType() const { return GetStaticType(); }
         inline std::string ToString() const { return "MouseWheelEvent: " + std::to_string(m_WheelX) + ", " + std::to_string(m_WheelY);}
         inline float GetX() const { return m_WheelX; }
         inline float GetY() const { return m_WheelY; }

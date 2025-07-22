@@ -31,7 +31,7 @@ RESCOMP = windres
 PCH = src/swpch.h
 PCH_PLACEHOLDER = $(OBJDIR)/$(notdir $(PCH))
 GCH = $(PCH_PLACEHOLDER).gch
-INCLUDES += -Isrc -Isrc/Starwand -Isrc/Starwand/Utils -Isrc/Starwand/Core -Isrc/Starwand/Events -Ivendor/spdlog/include -Ivendor/raylib/src -Ivendor/raylib/src/external
+INCLUDES += -Isrc -Isrc/Starwand -Isrc/Starwand/Utils -Isrc/Starwand/Core -Isrc/Starwand/Events -Isrc/Starwand/Renderer -Ivendor/spdlog/include -Ivendor/raylib/src -Ivendor/raylib/src/external
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
@@ -81,12 +81,14 @@ GENERATED += $(OBJDIR)/Application.o
 GENERATED += $(OBJDIR)/Layer.o
 GENERATED += $(OBJDIR)/LayerStack.o
 GENERATED += $(OBJDIR)/Logger.o
+GENERATED += $(OBJDIR)/Renderer.o
 GENERATED += $(OBJDIR)/Window.o
 GENERATED += $(OBJDIR)/swpch.o
 OBJECTS += $(OBJDIR)/Application.o
 OBJECTS += $(OBJDIR)/Layer.o
 OBJECTS += $(OBJDIR)/LayerStack.o
 OBJECTS += $(OBJDIR)/Logger.o
+OBJECTS += $(OBJDIR)/Renderer.o
 OBJECTS += $(OBJDIR)/Window.o
 OBJECTS += $(OBJDIR)/swpch.o
 
@@ -165,6 +167,9 @@ $(OBJDIR)/Logger.o: src/Starwand/Core/Logger.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/Window.o: src/Starwand/Core/Window.cpp
+	@echo "$(notdir $<)"
+	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
+$(OBJDIR)/Renderer.o: src/Starwand/Renderer/Renderer.cpp
 	@echo "$(notdir $<)"
 	$(SILENT) $(CXX) -include $(PCH_PLACEHOLDER) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 $(OBJDIR)/swpch.o: src/swpch.cpp

@@ -27,7 +27,7 @@ project "Starwand"
 
     files {
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
 	}
 
     includedirs {
@@ -77,13 +77,15 @@ project "Sandbox"
 
 	files {
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
 	}
 
 	includedirs {
 		"Starwand/vendor/spdlog/include",
 		"Starwand/src/**",
-		"Starwand/src/"
+		"Starwand/src/",
+        "Starwand/vendor/raylib/src",
+        "Starwand/vendor/raylib/src/external",
 	}
 
 	links {

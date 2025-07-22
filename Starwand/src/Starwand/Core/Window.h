@@ -7,12 +7,18 @@
 namespace Starwand {
     class Window {
     public:
-        Window(int w, int h, const char* title = "Starwand Engine");
+        Window(int w, int h, const char* title);
         ~Window();
 
         void PollEvents(std::function<void(Event&)> eventCallback);
         void SetVsync(bool vsync);
         inline void ToggleVsync() { SetVsync(!m_State.Vsync); }
+
+        void SetFullscreen(bool fullscreen);
+        inline void ToggleFullscreen() { SetFullscreen(!m_State.Fullscreen); }
+
+        void SetMaximized(bool maximized);
+        inline void ToggleMaximized() { SetMaximized(!m_State.Maximized); }
 
     private:
         int m_Width;
@@ -27,7 +33,8 @@ namespace Starwand {
             bool GainedFocus = false;
             bool LostFocus = false;
             bool Resized = false;
-            bool Vsync = true;
+            bool Vsync = false;
+            bool Fullscreen = false;
         };
 
         WindowState m_State;

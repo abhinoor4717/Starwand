@@ -4,6 +4,8 @@
 #include <string>
 
 #include "Events.h"
+#include "Input.h"
+#include "KeyCodes.h"
 
 namespace Starwand {
 
@@ -14,51 +16,55 @@ namespace Starwand {
     public:
         inline virtual EventType GetEventType() const = 0;
         inline virtual std::string ToString() const = 0;
-        inline int GetKeyCode() const { return m_KeyCode; }
+        inline Input::Key GetKeyCode() const { return m_KeyCode; }
     protected:
-        KeyEvent(int keycode)
+        KeyEvent(Input::Key keycode)
             : m_KeyCode(keycode) {}
     private:
-        int m_KeyCode;
+        Input::Key m_KeyCode;
     };
 
     class STARWAND_API KeyPressedEvent : public KeyEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::KeyPressed; }
-        std::string ToString() const { return "KeyPressedEvent: " + std::to_string(GetKeyCode()); }
+        static EventType GetStaticType() { return EventType::KeyPressed; }
+        EventType GetEventType() const { return GetStaticType(); }
+        std::string ToString() const { return "KeyPressedEvent: " + std::string(Input::KeyToString(GetKeyCode())) + " (" + std::to_string(Input::ToRawKey(GetKeyCode())) + ")"; }
     protected:
-        KeyPressedEvent(int keycode)
+        KeyPressedEvent(Input::Key keycode)
             : KeyEvent(keycode) {}
     };
 
     class STARWAND_API KeyReleasedEvent : public KeyEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::KeyReleased; }
-        std::string ToString() const { return "KeyReleasedEvent: " + std::to_string(GetKeyCode()); }
+        static EventType GetStaticType() { return EventType::KeyReleased; }
+        EventType GetEventType() const { return GetStaticType(); }
+        std::string ToString() const { return "KeyReleasedEvent: " + std::string(Input::KeyToString(GetKeyCode())) + " (" + std::to_string(Input::ToRawKey(GetKeyCode())) + ")"; }
     protected:
-        KeyReleasedEvent(int keycode)
+        KeyReleasedEvent(Input::Key keycode)
             : KeyEvent(keycode) {}
     };
 
     class STARWAND_API KeyDownEvent : public KeyEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::KeyDown; }
-        std::string ToString() const { return "KeyDownEvent: " + std::to_string(GetKeyCode()); }
+        static EventType GetStaticType() { return EventType::KeyDown; }
+        EventType GetEventType() const { return GetStaticType(); }
+        std::string ToString() const { return "KeyDownEvent: " + std::string(Input::KeyToString(GetKeyCode())) + " (" + std::to_string(Input::ToRawKey(GetKeyCode())) + ")"; }
     protected:
-        KeyDownEvent(int keycode)
+        KeyDownEvent(Input::Key keycode)
             : KeyEvent(keycode) {}
     };
 
     class STARWAND_API KeyUpEvent : public KeyEvent {
         friend class Window;
     public:
-        EventType GetEventType() const { return EventType::KeyUp; }
-        std::string ToString() const { return "KeyUpEvent: " + std::to_string(GetKeyCode()); }
+        static EventType GetStaticType() { return EventType::KeyUp; }
+        EventType GetEventType() const { return GetStaticType(); }
+        std::string ToString() const { return "KeyUpEvent: " + std::string(Input::KeyToString(GetKeyCode())) + " (" + std::to_string(Input::ToRawKey(GetKeyCode())) + ")"; }
     protected:
-        KeyUpEvent(int keycode)
+        KeyUpEvent(Input::Key keycode)
             : KeyEvent(keycode) {}
     };
 }

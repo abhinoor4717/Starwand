@@ -27,6 +27,14 @@ namespace Starwand {
     inline std::ostream& operator<<(std::ostream& os, const Event& event) {
         return os << event.ToString();
     }
+
+    template <typename T>
+    inline T* ConvertEvent(Event& e) {
+        if (e.GetEventType() == T::GetStaticType()) {
+            return dynamic_cast<T*>(&e);
+        }
+        return nullptr;
+    }
     
 }
 

@@ -6,23 +6,37 @@
 #include "Events/MouseEvents.h"
 #include "Events/WindowEvents.h"
 #include "Utils/DeltaTime.h"
+#include "Renderer/Renderer.h"
 
 namespace Starwand {
 
     Application* Application::s_Instance = nullptr;
 
-    Application::Application()
+    Application::Application(ApplicationProps props)
         : m_Running(false) {
+            Logger::Init();
             s_Instance = this;
 
-            #ifndef SW_DEBUG
-                SetConfigFlags(LOG_NONE);
+            #ifdef SW_RELEASE
+                ::SetTraceLogLevel(::LOG_NONE);
+            #endif
+            #ifdef SW_DEBUG
+                ::SetTraceLogLevel(::LOG_ALL);
             #endif
 
-            m_Window = new Window(1080, 720);
+            m_Window = new Window(props.Width, props.Height, props.Title.c_str());
+            if (HasFlag(props.flags, ApplicationConfigFlags::VSYNC)) {
+                m_Window->SetVsync(true);
+            }
+            if (HasFlag(props.flags, ApplicationConfigFlags::WINDOW_FULLSCREEN)) {
+                m_Window->SetFullscreen(true);
+            }
+            if (HasFlag(props.flags, ApplicationConfigFlags::WINDOW_MAXIMIZED)) {
+                m_Window->SetMaximized(true);
+            }
+
+            m_LayerStack = new LayerStack();
             m_Running = true;
-            // SetTargetFPS(240);
-            Logger::Init();
     }
 
     Application::~Application() {
@@ -33,27 +47,25 @@ namespace Starwand {
         auto& app = Get();
 
         while (m_Running) {
-            DeltaTime dt = DeltaTime::FromSeconds(GetFrameTime());
+            DeltaTime dt = DeltaTime::FromSeconds(::GetFrameTime());
             
             m_Window->PollEvents([&app](Event& e) { app.OnEvent(e); });
 
-            BeginDrawing();
-            ClearBackground(BLACK);
-            DrawFPS(10, 10);
-            EndDrawing();
+            ::BeginDrawing();
+
+            m_LayerStack->OnUpdate(dt);
+
+            ::EndDrawing();
         }
     }
 
     void Application::OnEvent(Event& e) {
-        SW_CORE_INFO(e);
+        SW_CORE_TRACE(e);
         if (e.GetEventType() == EventType::WindowClosed) {
             m_Running = false;
         }
-        else if (e.GetEventType() == EventType::KeyReleased) {
-            auto& kEvent = dynamic_cast<KeyReleasedEvent&>(e);
-            if (kEvent.GetKeyCode() == KEY_V) {
-                m_Window->ToggleVsync();
-            }
-        }
+
+        if (!e.Handled)
+            m_LayerStack->OnEvent(e);
     }
 }

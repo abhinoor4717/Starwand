@@ -9,8 +9,18 @@ namespace Starwand {
         LayerStack();
         ~LayerStack();
 
+        void OnEvent(Event& e);
+        void OnUpdate(DeltaTime& dt);
+
         template<typename T, typename... Args>
-        T* PushLayer(Args&&... args);
+        T* PushLayer(Args&&... args) {
+            static_assert(std::is_base_of<Layer, T>::value, "T must inherit from Layer");
+            auto layer = std::make_unique<T>(std::forward<Args>(args)...);
+            T* ptr = layer.get();
+            m_Layers.push_back(std::move(layer));
+            return ptr;
+        }
+
         void PopLayer(Layer* layer);
 
     private:

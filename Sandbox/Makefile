@@ -28,7 +28,7 @@ ifeq ($(origin AR), default)
   AR = ar
 endif
 RESCOMP = windres
-INCLUDES += -I../Starwand/vendor/spdlog/include -I../Starwand/src/Starwand -I../Starwand/src/Starwand/Utils -I../Starwand/src/Starwand/Core -I../Starwand/src/Starwand/Events -I../Starwand/src
+INCLUDES += -I../Starwand/vendor/spdlog/include -I../Starwand/src/Starwand -I../Starwand/src/Starwand/Utils -I../Starwand/src/Starwand/Core -I../Starwand/src/Starwand/Events -I../Starwand/src/Starwand/Renderer -I../Starwand/src -I../Starwand/vendor/raylib/src -I../Starwand/vendor/raylib/src/external
 FORCE_INCLUDE +=
 ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
 ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)

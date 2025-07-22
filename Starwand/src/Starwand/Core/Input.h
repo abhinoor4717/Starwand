@@ -36,7 +36,7 @@ namespace Starwand {
 
             // Handle normal keys (excluding toggle keys)
             for (int key = 32; key < 349; ++key) {
-                if (key == KEY_CAPS_LOCK || key == KEY_NUM_LOCK) continue;
+                if (key == ::KEY_CAPS_LOCK || key == ::KEY_NUM_LOCK) continue;
 
                 bool p = ::IsKeyPressed(key);
                 bool d = ::IsKeyDown(key);
@@ -48,22 +48,22 @@ namespace Starwand {
             }
 
             // ---- Poll all pressed keys (handles toggle keys) ----
-            int pressedKey = GetKeyPressed();
+            int pressedKey = ::GetKeyPressed();
             while (pressedKey > 0) {
-                if (pressedKey == KEY_CAPS_LOCK) {
+                if (pressedKey == ::KEY_CAPS_LOCK) {
                     capsIsDown = !capsIsDown; // toggle
-                } else if (pressedKey == KEY_NUM_LOCK) {
+                } else if (pressedKey == ::KEY_NUM_LOCK) {
                     numIsDown = !numIsDown; // toggle
                 }
 
-                pressedKey = GetKeyPressed();
+                pressedKey = ::GetKeyPressed();
             }
 
             // ---- Emulate Caps Lock state ----
             bool capsPressed = !capsWasDown && capsIsDown;
             bool capsReleased = capsWasDown && !capsIsDown;
             if (capsPressed || capsIsDown || capsReleased) {
-                keys.push_back({ KEY_CAPS_LOCK, capsPressed, capsIsDown, capsReleased });
+                keys.push_back({ ::KEY_CAPS_LOCK, capsPressed, capsIsDown, capsReleased });
             }
             capsWasDown = capsIsDown;
 
@@ -71,7 +71,7 @@ namespace Starwand {
             bool numPressed = !numWasDown && numIsDown;
             bool numReleased = numWasDown && !numIsDown;
             if (numPressed || numIsDown || numReleased) {
-                keys.push_back({ KEY_NUM_LOCK, numPressed, numIsDown, numReleased });
+                keys.push_back({ ::KEY_NUM_LOCK, numPressed, numIsDown, numReleased });
             }
             numWasDown = numIsDown;
 
@@ -89,7 +89,7 @@ namespace Starwand {
 
             // First, handle all non-toggle keys
             for (int key = 32; key < 349; ++key) {
-                if (key == KEY_CAPS_LOCK || key == KEY_NUM_LOCK) continue;
+                if (key == ::KEY_CAPS_LOCK || key == ::KEY_NUM_LOCK) continue;
 
                 bool p = ::IsKeyPressed(key);
                 bool d = ::IsKeyDown(key);
@@ -99,21 +99,21 @@ namespace Starwand {
             }
 
             // Poll pressed toggle keys (one per frame)
-            int pressedKey = GetKeyPressed();
+            int pressedKey = ::GetKeyPressed();
             while (pressedKey > 0) {
-                if (pressedKey == KEY_CAPS_LOCK)
+                if (pressedKey == ::KEY_CAPS_LOCK)
                     capsIsDown = !capsIsDown;
-                else if (pressedKey == KEY_NUM_LOCK)
+                else if (pressedKey == ::KEY_NUM_LOCK)
                     numIsDown = !numIsDown;
 
-                pressedKey = GetKeyPressed();
+                pressedKey = ::GetKeyPressed();
             }
 
             // Manually insert caps lock state
             {
                 bool pressed = !capsWasDown && capsIsDown;
                 bool released = capsWasDown && !capsIsDown;
-                keys.push_back({ KEY_CAPS_LOCK, pressed, capsIsDown, released });
+                keys.push_back({ ::KEY_CAPS_LOCK, pressed, capsIsDown, released });
                 capsWasDown = capsIsDown;
             }
 
@@ -121,7 +121,7 @@ namespace Starwand {
             {
                 bool pressed = !numWasDown && numIsDown;
                 bool released = numWasDown && !numIsDown;
-                keys.push_back({ KEY_NUM_LOCK, pressed, numIsDown, released });
+                keys.push_back({ ::KEY_NUM_LOCK, pressed, numIsDown, released });
                 numWasDown = numIsDown;
             }
 

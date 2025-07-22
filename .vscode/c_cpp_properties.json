@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/Starwand/src/",
+                "${workspaceFolder}/Starwand/src/**",
+                "${workspaceFolder}/Starwand/vendor/raylib/src",
+                "${workspaceFolder}/Starwand/vendor/raylib/src/external"
+                
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++23",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
