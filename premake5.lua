@@ -1,5 +1,4 @@
 workspace "Starwand"
-    location "."
     architecture "x64"
     configurations {
         "Debug",
@@ -43,6 +42,10 @@ project "Starwand"
         "raylib",
         "spdlog"
     }
+
+    defines {
+        "SW_BUILD_DLL"
+    }
     
     filter "system:windows"
         staticruntime "On"
@@ -51,6 +54,16 @@ project "Starwand"
         defines {
             "SW_PLATFORM_WINDOWS"
         }
+
+        links {
+            "winmm"
+        }
+
+    filter "action:vs*"
+        buildoptions {
+            "/utf-8"
+        }
+
     filter "system:linux"
         defines {
             "SW_PLATFORM_LINUX"
@@ -65,6 +78,11 @@ project "Starwand"
         symbols "On"
     filter "configurations:Release"
         defines "SW_RELEASE"
+
+    postbuildcommands {
+		("{MKDIR} ../bin/" .. outputdir .. "/Sandbox"),
+		("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox/")
+	}
 
 project "Sandbox"
     location "Sandbox"
@@ -99,6 +117,12 @@ project "Sandbox"
         defines {
             "SW_PLATFORM_WINDOWS"
         }
+
+    filter "action:vs*"
+        buildoptions {
+            "/utf-8"
+        }
+
     filter "system:linux"
         defines {
             "SW_PLATFORM_LINUX"

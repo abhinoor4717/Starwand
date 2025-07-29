@@ -8,86 +8,98 @@ ifndef verbose
   SILENT = @
 endif
 
-.PHONY: clean prebuild
+.PHONY: clean prebuild prelink
+
+ifeq ($(config),debug)
+  ifeq ($(origin CC), default)
+    CC = gcc
+  endif
+  ifeq ($(origin CXX), default)
+    CXX = g++
+  endif
+  ifeq ($(origin AR), default)
+    AR = ar
+  endif
+  RESCOMP = windres
+  TARGETDIR = ../bin/Debug-windows-x86/Sandbox
+  TARGET = $(TARGETDIR)/Sandbox.exe
+  OBJDIR = ../bin-int/Debug-windows-x86/Sandbox
+  DEFINES += -DSW_PLATFORM_WINDOWS -DSW_DEBUG
+  INCLUDES += -I../Starwand/vendor/spdlog/include -I../Starwand/src/Starwand -I../Starwand/src/Starwand/Core -I../Starwand/src/Starwand/Events -I../Starwand/src/Starwand/Renderer -I../Starwand/src/Starwand/Utils -I../Starwand/src -I../Starwand/vendor/raylib/src -I../Starwand/vendor/raylib/src/external
+  FORCE_INCLUDE +=
+  ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32 -g
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -g -std=c++23
+  ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
+  LIBS += ../bin/Debug-windows-x86/Starwand/Starwand.lib
+  LDDEPS += ../bin/Debug-windows-x86/Starwand/Starwand.lib
+  ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -m32
+  LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+  define PREBUILDCMDS
+  endef
+  define PRELINKCMDS
+  endef
+  define POSTBUILDCMDS
+  endef
+all: prebuild prelink $(TARGET)
+	@:
+
+endif
+
+ifeq ($(config),release)
+  ifeq ($(origin CC), default)
+    CC = gcc
+  endif
+  ifeq ($(origin CXX), default)
+    CXX = g++
+  endif
+  ifeq ($(origin AR), default)
+    AR = ar
+  endif
+  RESCOMP = windres
+  TARGETDIR = ../bin/Release-windows-x86/Sandbox
+  TARGET = $(TARGETDIR)/Sandbox.exe
+  OBJDIR = ../bin-int/Release-windows-x86/Sandbox
+  DEFINES += -DSW_PLATFORM_WINDOWS -DSW_RELEASE
+  INCLUDES += -I../Starwand/vendor/spdlog/include -I../Starwand/src/Starwand -I../Starwand/src/Starwand/Core -I../Starwand/src/Starwand/Events -I../Starwand/src/Starwand/Renderer -I../Starwand/src/Starwand/Utils -I../Starwand/src -I../Starwand/vendor/raylib/src -I../Starwand/vendor/raylib/src/external
+  FORCE_INCLUDE +=
+  ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
+  ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m32
+  ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m32 -std=c++23
+  ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
+  LIBS += ../bin/Release-windows-x86/Starwand/Starwand.lib
+  LDDEPS += ../bin/Release-windows-x86/Starwand/Starwand.lib
+  ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib32 -m32 -s
+  LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
+  define PREBUILDCMDS
+  endef
+  define PRELINKCMDS
+  endef
+  define POSTBUILDCMDS
+  endef
+all: prebuild prelink $(TARGET)
+	@:
+
+endif
+
+OBJECTS := \
+	$(OBJDIR)/main.o \
+
+RESOURCES := \
+
+CUSTOMFILES := \
 
 SHELLTYPE := posix
-ifeq ($(shell echo "test"), "test")
+ifeq (.exe,$(findstring .exe,$(ComSpec)))
 	SHELLTYPE := msdos
 endif
 
-# Configurations
-# #############################################
-
-ifeq ($(origin CC), default)
-  CC = gcc
-endif
-ifeq ($(origin CXX), default)
-  CXX = g++
-endif
-ifeq ($(origin AR), default)
-  AR = ar
-endif
-RESCOMP = windres
-INCLUDES += -I../Starwand/vendor/spdlog/include -I../Starwand/src/Starwand -I../Starwand/src/Starwand/Utils -I../Starwand/src/Starwand/Core -I../Starwand/src/Starwand/Events -I../Starwand/src/Starwand/Renderer -I../Starwand/src -I../Starwand/vendor/raylib/src -I../Starwand/vendor/raylib/src/external
-FORCE_INCLUDE +=
-ALL_CPPFLAGS += $(CPPFLAGS) -MD -MP $(DEFINES) $(INCLUDES)
-ALL_RESFLAGS += $(RESFLAGS) $(DEFINES) $(INCLUDES)
-LINKCMD = $(CXX) -o "$@" $(OBJECTS) $(RESOURCES) $(ALL_LDFLAGS) $(LIBS)
-define PREBUILDCMDS
-endef
-define PRELINKCMDS
-endef
-define POSTBUILDCMDS
-endef
-
-ifeq ($(config),debug)
-TARGETDIR = ../bin/Debug-linux-x86_64/Sandbox
-TARGET = $(TARGETDIR)/Sandbox
-OBJDIR = ../bin-int/Debug-linux-x86_64/Sandbox
-DEFINES += -DSW_PLATFORM_LINUX -DSW_DEBUG
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64 -g
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -g -std=c++23
-LIBS += ../bin/Debug-linux-x86_64/Starwand/libStarwand.so
-LDDEPS += ../bin/Debug-linux-x86_64/Starwand/libStarwand.so
-ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -Wl,-rpath,'$$ORIGIN/../Starwand' -m64
-
-else ifeq ($(config),release)
-TARGETDIR = ../bin/Release-linux-x86_64/Sandbox
-TARGET = $(TARGETDIR)/Sandbox
-OBJDIR = ../bin-int/Release-linux-x86_64/Sandbox
-DEFINES += -DSW_PLATFORM_LINUX -DSW_RELEASE
-ALL_CFLAGS += $(CFLAGS) $(ALL_CPPFLAGS) -m64
-ALL_CXXFLAGS += $(CXXFLAGS) $(ALL_CPPFLAGS) -m64 -std=c++23
-LIBS += ../bin/Release-linux-x86_64/Starwand/libStarwand.so
-LDDEPS += ../bin/Release-linux-x86_64/Starwand/libStarwand.so
-ALL_LDFLAGS += $(LDFLAGS) -L/usr/lib64 -Wl,-rpath,'$$ORIGIN/../Starwand' -m64 -s
-
-endif
-
-# Per File Configurations
-# #############################################
-
-
-# File sets
-# #############################################
-
-GENERATED :=
-OBJECTS :=
-
-GENERATED += $(OBJDIR)/main.o
-OBJECTS += $(OBJDIR)/main.o
-
-# Rules
-# #############################################
-
-all: $(TARGET)
-	@:
-
-$(TARGET): $(GENERATED) $(OBJECTS) $(LDDEPS) | $(TARGETDIR)
-	$(PRELINKCMDS)
+$(TARGET): $(GCH) ${CUSTOMFILES} $(OBJECTS) $(LDDEPS) $(RESOURCES) | $(TARGETDIR)
 	@echo Linking Sandbox
 	$(SILENT) $(LINKCMD)
 	$(POSTBUILDCMDS)
+
+$(CUSTOMFILES): | $(OBJDIR)
 
 $(TARGETDIR):
 	@echo Creating $(TARGETDIR)
@@ -109,41 +121,32 @@ clean:
 	@echo Cleaning Sandbox
 ifeq (posix,$(SHELLTYPE))
 	$(SILENT) rm -f  $(TARGET)
-	$(SILENT) rm -rf $(GENERATED)
 	$(SILENT) rm -rf $(OBJDIR)
 else
 	$(SILENT) if exist $(subst /,\\,$(TARGET)) del $(subst /,\\,$(TARGET))
-	$(SILENT) if exist $(subst /,\\,$(GENERATED)) del /s /q $(subst /,\\,$(GENERATED))
 	$(SILENT) if exist $(subst /,\\,$(OBJDIR)) rmdir /s /q $(subst /,\\,$(OBJDIR))
 endif
 
-prebuild: | $(OBJDIR)
+prebuild:
 	$(PREBUILDCMDS)
 
+prelink: $(OBJECTS)
+	$(PRELINKCMDS)
+
 ifneq (,$(PCH))
-$(OBJECTS): $(GCH) | $(PCH_PLACEHOLDER)
-$(GCH): $(PCH) | prebuild
+$(OBJECTS): $(GCH) $(PCH) | $(OBJDIR)
+$(GCH): $(PCH) | $(OBJDIR)
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) -x c++-header $(ALL_CXXFLAGS) -o "$@" -MF "$(@:%.gch=%.d)" -c "$<"
-$(PCH_PLACEHOLDER): $(GCH) | $(OBJDIR)
-ifeq (posix,$(SHELLTYPE))
-	$(SILENT) touch "$@"
 else
-	$(SILENT) echo $null >> "$@"
+$(OBJECTS): | $(OBJDIR)
 endif
-else
-$(OBJECTS): | prebuild
-endif
-
-
-# File Rules
-# #############################################
 
 $(OBJDIR)/main.o: src/main.cpp
-	@echo "$(notdir $<)"
+	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(ALL_CXXFLAGS) $(FORCE_INCLUDE) -o "$@" -MF "$(@:%.o=%.d)" -c "$<"
 
 -include $(OBJECTS:%.o=%.d)
 ifneq (,$(PCH))
-  -include $(PCH_PLACEHOLDER).d
+  -include $(OBJDIR)/$(notdir $(PCH)).d
 endif

@@ -9,6 +9,12 @@ namespace Starwand {
         LayerStack();
         ~LayerStack();
 
+        LayerStack(const LayerStack&) = delete;
+        LayerStack& operator=(const LayerStack&) = delete;
+
+        LayerStack(LayerStack&&) noexcept = default;
+        LayerStack& operator=(LayerStack&&) noexcept = default;
+
         void OnEvent(Event& e);
         void OnUpdate(DeltaTime& dt);
 

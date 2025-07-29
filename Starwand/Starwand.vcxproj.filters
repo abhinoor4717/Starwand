@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Starwand">
+      <UniqueIdentifier>{291105E1-15DE-5FEC-3EF7-4D942A23957A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Starwand\Core">
+      <UniqueIdentifier>{2157F456-8D17-708D-5652-B90AC2D1B469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Starwand\Events">
+      <UniqueIdentifier>{EDB488EA-5940-F6AE-6251-79A3CE5B52AF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Starwand\Renderer">
+      <UniqueIdentifier>{EFB284A6-5BC9-823C-A440-0E5E109653C4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Starwand\Utils">
+      <UniqueIdentifier>{498DC736-355B-BB3C-1EEF-2B630A5C97A1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Starwand.h" />
+    <ClInclude Include="src\Starwand\Core\Application.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\Core.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\Input.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\KeyCodes.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\Layer.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\LayerStack.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\Logger.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\MouseCodes.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Core\Window.h">
+      <Filter>Starwand\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Events\Events.h">
+      <Filter>Starwand\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Events\KeyEvents.h">
+      <Filter>Starwand\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Events\MouseEvents.h">
+      <Filter>Starwand\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Events\WindowEvents.h">
+      <Filter>Starwand\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Renderer\Renderer.h">
+      <Filter>Starwand\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Starwand\Utils\DeltaTime.h">
+      <Filter>Starwand\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\swpch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Starwand\Core\Application.cpp">
+      <Filter>Starwand\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Starwand\Core\Layer.cpp">
+      <Filter>Starwand\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Starwand\Core\LayerStack.cpp">
+      <Filter>Starwand\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Starwand\Core\Logger.cpp">
+      <Filter>Starwand\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Starwand\Core\Window.cpp">
+      <Filter>Starwand\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Starwand\Renderer\Renderer.cpp">
+      <Filter>Starwand\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\swpch.cpp" />
+  </ItemGroup>
+</Project>

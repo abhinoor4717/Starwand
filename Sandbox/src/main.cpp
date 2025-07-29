@@ -23,7 +23,7 @@ public:
 
 class MyApp : public Starwand::Application {
 public:
-    MyApp() : Application({"My Game", 1080, 720, Starwand::ApplicationConfigFlags::VSYNC}) {
+    MyApp() : Application({"My Game", 1080, 720, Starwand::ApplicationConfigFlags::NONE}) {
         auto mainLayer = GetLayerStack().PushLayer<MainLayer>();
     }
 };

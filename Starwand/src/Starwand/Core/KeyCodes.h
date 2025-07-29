@@ -62,7 +62,7 @@ namespace Starwand {
             TAB                = ::KEY_TAB,
             BACKSPACE          = ::KEY_BACKSPACE,
             INSERT             = ::KEY_INSERT,
-            DELETE             = ::KEY_DELETE,
+            DEL                = ::KEY_DELETE,
             RIGHT              = ::KEY_RIGHT,
             LEFT               = ::KEY_LEFT,
             DOWN               = ::KEY_DOWN,
@@ -176,7 +176,7 @@ namespace Starwand {
                 case Key::TAB:                return "TAB";
                 case Key::BACKSPACE:          return "BACKSPACE";
                 case Key::INSERT:             return "INSERT";
-                case Key::DELETE:             return "DELETE";
+                case Key::DEL:             return "DELETE";
                 case Key::RIGHT:              return "RIGHT";
                 case Key::LEFT:               return "LEFT";
                 case Key::DOWN:               return "DOWN";
