@@ -4,3 +4,10 @@
 **/bin-int/**
 
 .vs
+
+**.sln
+**.make
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+MakeFile
