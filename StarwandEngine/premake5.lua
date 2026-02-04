@@ -11,7 +11,14 @@ project "StarwandEngine"
     }
 
     links {
-        -- "glfw"
+        "glad",
+        "glfw",
+        "gdi32"
+    }
+
+    includedirs {
+        "vendor/glfw/include",
+        "vendor/glad/include",
     }
 
     defines {
@@ -20,6 +27,7 @@ project "StarwandEngine"
 
     filter "system:windows"
         defines "SW_PLATFORM_WINDOWS"
+        links "winmm"
 
     filter "configurations:Debug"
         defines {"SW_DEBUG"}
