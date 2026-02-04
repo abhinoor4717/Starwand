@@ -1,0 +1,3 @@
+[submodule "StarwandEngine/vendor/glfw"]
+	path = StarwandEngine/vendor/glfw
+	url = https://github.com/abhinoor4717/StarwandGLFW.git
