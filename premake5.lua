@@ -4,8 +4,6 @@ workspace "StarwandTester"
         "Release"
     }
 
+    -- include "StarwandEngine/vendor/glfw"
     include "StarwandEngine"
     include "Sandbox"
-
-
-

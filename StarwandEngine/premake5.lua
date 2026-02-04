@@ -6,9 +6,20 @@ project "StarwandEngine"
     objdir "%{wks.location}/obj/%{prj.name}/%{cfg.buildcfg}"
 
     files {
-        "StarwandEngine/src/**.h",
-        "StarwandEngine/src/**.cpp"
+        "src/**.h",
+        "src/**.cpp"
     }
+
+    links {
+        -- "glfw"
+    }
+
+    defines {
+        "SW_BUILD_DLL"
+    }
+
+    filter "system:windows"
+        defines "SW_PLATFORM_WINDOWS"
 
     filter "configurations:Debug"
         defines {"SW_DEBUG"}

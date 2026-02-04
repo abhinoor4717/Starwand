@@ -15,8 +15,11 @@ project "Sandbox"
     }
 
     includedirs {
-        "%{wks.location}/StarwandEngine/StarwandEngine/src"
+        "%{wks.location}/StarwandEngine/src"
     }
+
+    filter "system:windows"
+        defines { "SW_PLATFORM_WINDOWS" }
 
     postbuildcommands {
         "{COPY} %{wks.location}/bin/StarwandEngine/%{cfg.buildcfg}/* %{cfg.targetdir}"
