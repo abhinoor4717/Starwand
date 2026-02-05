@@ -5,69 +5,143 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 
+#include "Graphics/VertexArray.h"
+
 namespace StarwandEngine {
     void greet() {
         std::cout << "Greetings from StarwandEngine" << std::endl;
     }
 
+    const char* vertexSrc = R"(
+    #version 330 core
+    layout(location = 0) in vec3 a_Position;
+
+    void main()
+    {
+        gl_Position = vec4(a_Position, 1.0);
+    }
+    )";
+
+    const char* fragmentSrc = R"(
+    #version 330 core
+    out vec4 FragColor;
+
+    void main()
+    {
+        FragColor = vec4(1.0, 0.2, 0.2, 1.0);
+    }
+    )";
+
+    static GLuint CompileShader(GLenum type, const char* src)
+    {
+        GLuint shader = glCreateShader(type);
+        glShaderSource(shader, 1, &src, nullptr);
+        glCompileShader(shader);
+
+        GLint success;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success)
+        {
+            char log[1024];
+            glGetShaderInfoLog(shader, 1024, nullptr, log);
+            std::cout << "Shader compile error:\n" << log << std::endl;
+        }
+
+        return shader;
+    }
+
+    static GLuint CreateShaderProgram()
+    {
+        GLuint vs = CompileShader(GL_VERTEX_SHADER, vertexSrc);
+        GLuint fs = CompileShader(GL_FRAGMENT_SHADER, fragmentSrc);
+
+        GLuint program = glCreateProgram();
+        glAttachShader(program, vs);
+        glAttachShader(program, fs);
+        glLinkProgram(program);
+
+        GLint success;
+        glGetProgramiv(program, GL_LINK_STATUS, &success);
+        if (!success)
+        {
+            char log[1024];
+            glGetProgramInfoLog(program, 1024, nullptr, log);
+            std::cout << "Shader link error:\n" << log << std::endl;
+        }
+
+        glDeleteShader(vs);
+        glDeleteShader(fs);
+
+        return program;
+    }
+
     void test() {
-        if (!glfwInit()) {
-            std::cout << "GLFW failed to initialize!\n";
+        if (!glfwInit())
+        {
+            std::cout << "Failed to init GLFW\n";
             return;
         }
 
-        GLFWwindow* window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
-        if (!window) {
-            std::cout << "Failed to create window!\n";
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+        GLFWwindow* window = glfwCreateWindow(800, 600, "Triangle Test", nullptr, nullptr);
+        if (!window)
+        {
+            std::cout << "Failed to create window\n";
+            glfwTerminate();
             return;
         }
 
         glfwMakeContextCurrent(window);
 
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-            std::cout << "Failed to load glad\n";
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+        {
+            std::cout << "Failed to init GLAD\n";
             return;
         }
 
+        // ================= GEOMETRY =================
+
         float vertices[] = {
-            // Vertex position      // Color
-            -0.5f, -0.5f, 1.0f,     
-            0.5f, -0.5f, 1.0f,      
-            0.5f, 0.5f, 1.0f,       
-
-            // -0.5f, -0.5f, 1.0f,     1.0f, 0.0f, 0.0f,
-            // -0.5f, 0.5f, 1.0f,      1.0f, 1.0f, 0.0f,
-            // 0.5f, 0.5f, 1.0f,       1.0f, 1.0f, 0.0f,
+            -0.5f, -1.0f, 0.0f,
+            0.5f, -0.5f, 0.0f,
+            0.0f,  0.5f, 0.0f
         };
 
-        unsigned short indices[] = {
-                0, 1, 2
+        unsigned int indices[] = {
+            0, 1, 2
         };
 
-        GLuint vb, ib, vl;
+        using namespace Starwand;
 
-        glGenBuffers(1, &vb);
-        glBindBuffer(GL_ARRAY_BUFFER, vb);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+        auto va = VertexArray::Create();
+        auto vb = VertexBuffer::Create(vertices, sizeof(vertices), BufferUsage::Static);
+        vb->SetLayout(BufferLayout(
+            {
+                BufferElement(ShaderDataType::Float3, "position", false)
+            }
+        ));
+        auto ib = IndexBuffer::Create(indices, sizeof(indices));
+        va->AddVertexBuffer(vb);
+        va->SetIndexBuffer(ib);
 
-        glGenBuffers(1, &ib);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+        GLuint shader = CreateShaderProgram();
 
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, 0);
-        glEnableVertexAttribArray(0);
+        // ================= LOOP =================
 
-        glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-        while (!glfwWindowShouldClose(window)) {
+        while (!glfwWindowShouldClose(window))
+        {
+            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ib);
-            glBindBuffer(GL_ARRAY_BUFFER, vb);
-            glDrawRangeElements(GL_TRIANGLES, 0, 3, 3, GL_UNSIGNED_SHORT, NULL);
+            glUseProgram(shader);
+            va->Bind();
+            glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 
-            glfwPollEvents();
             glfwSwapBuffers(window);
-
+            glfwPollEvents();
         }
 
         glfwTerminate();
