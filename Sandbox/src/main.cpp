@@ -2,9 +2,8 @@
 #include "StarwandEngine.h"
 
 int main() {
-    std::cout << "Test" << std::endl;
-    StarwandEngine::greet();
-    StarwandEngine::test();
+    Starwand::init();
+    Starwand::test();
 
     return 0;
 }

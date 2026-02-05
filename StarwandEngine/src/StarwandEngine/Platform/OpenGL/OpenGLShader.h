@@ -6,7 +6,7 @@
 namespace Starwand {
     class OpenGLShader : public Shader {
     public:
-        OpenGLShader(const std::string& vertPath, const std::string& fragPath);
+        OpenGLShader(const std::string& vertSrc, const std::string& fragSrc);
         ~OpenGLShader();
 
         void Bind() const override;

@@ -1,2 +1,2 @@
-#include "StarwandEngine/Core.h"
-#include "StarwandEngine/Test.h"
+#include "StarwandEngine/Core/Core.h"
+#include "StarwandEngine/Core/Test.h"

@@ -7,23 +7,39 @@
 #include <stdexcept>
 
 namespace Starwand {
-    OpenGLShader::OpenGLShader(const std::string& vertPath, const std::string& fragPath) {
-        std::ifstream vertFile(vertPath);
-        if (!vertFile.is_open()) {
-            throw std::runtime_error("Vertex shader not found at path: " + vertPath);
-        }
-
-        std::string vertSrc(std::istreambuf_iterator<char>(vertFile), std::istreambuf_iterator<char>());
-
-        std::ifstream fragFile(vertPath);
-        if (!fragFile.is_open()) {
-            throw std::runtime_error("Fragment shader not found at path: " + vertPath);
-        }
-
-        std::string fragSrc(std::istreambuf_iterator<char>(vertFile), std::istreambuf_iterator<char>());
-        const char* src = ;
+    OpenGLShader::OpenGLShader(const std::string& vertSrc, const std::string& fragSrc) {
         GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vs, 1, &src, nullptr);
+        const char* vertexRawSrc = vertSrc.c_str();
+        glShaderSource(vs, 1, &vertexRawSrc, nullptr);
         glCompileShader(vs);
+        GLint success;
+        glGetShaderiv(vs, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            char log[1024];
+            glGetShaderInfoLog(vs, 1024, nullptr, log);
+
+        }
+    }
+
+    OpenGLShader::~OpenGLShader() {
+        
+    }
+
+    void OpenGLShader::Bind() const {
+
+    }
+
+    void OpenGLShader::Unbind() const {
+
+    }
+
+    void OpenGLShader::SetInt(const std::string& name, int val) {
+
+    }
+    void OpenGLShader::SetFloat(const std::string& name, float val) {
+
+    }
+    void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value) {
+
     }
 }

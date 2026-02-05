@@ -16,6 +16,6 @@ namespace Starwand {
         virtual void SetFloat(const std::string& name, float val) = 0;
         virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
 
-        static std::shared_ptr<Shader> Create(const std::string& vertPath, const std::string& fragPath);
+        static std::shared_ptr<Shader> Create(const std::string& vertSrc, const std::string& fragSrc);
     };
 }

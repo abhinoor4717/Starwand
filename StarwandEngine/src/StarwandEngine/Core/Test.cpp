@@ -6,8 +6,12 @@
 #include <glm/glm.hpp>
 
 #include "Graphics/VertexArray.h"
+#include "Log.h"
+namespace Starwand {
+    void init() {
+        Log::Init();
+    }
 
-namespace StarwandEngine {
     void greet() {
         std::cout << "Greetings from StarwandEngine" << std::endl;
     }
@@ -76,6 +80,8 @@ namespace StarwandEngine {
     }
 
     void test() {
+        SWE_INFO("Hello from Starwand!");
+
         if (!glfwInit())
         {
             std::cout << "Failed to init GLFW\n";
@@ -83,7 +89,7 @@ namespace StarwandEngine {
         }
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
         GLFWwindow* window = glfwCreateWindow(800, 600, "Triangle Test", nullptr, nullptr);
@@ -113,8 +119,6 @@ namespace StarwandEngine {
         unsigned int indices[] = {
             0, 1, 2
         };
-
-        using namespace Starwand;
 
         auto va = VertexArray::Create();
         auto vb = VertexBuffer::Create(vertices, sizeof(vertices), BufferUsage::Static);

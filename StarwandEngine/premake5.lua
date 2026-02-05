@@ -19,6 +19,7 @@ project "StarwandEngine"
     includedirs {
         "vendor/glfw/include",
         "vendor/glad/include",
+        "vendor/spdlog/include",
         "vendor/glm",
         "src/**"
     }
