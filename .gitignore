@@ -1,49 +1,45 @@
+# ================= Build Output =================
 bin/
 obj/
-.vs
-**.vc
-**.log
+x64/
+x86/
+Debug/
+Release/
 
-# Prerequisites
-*.d
+# ================= Visual Studio (ALL OF IT) =================
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.*
+*.VC.db
+*.VC.VC.opendb
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
 
-# Compiled Object files
-*.slo
-*.lo
+# ================= Logs =================
+*.log
+
+# ================= Object / Debug =================
 *.o
 *.obj
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Linker files
+*.pdb
 *.ilk
 
-# Debugger Files
-*.pdb
-
-# Compiled Dynamic libraries
+# ================= Libraries =================
+*.dll
+*.lib
+*.a
 *.so
 *.dylib
-*.dll
-*.so.*
 
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
+# ================= Executables =================
 *.exe
 *.out
 *.app
 
-
-**MakeFile
+# ================= Make / Premake =================
+Makefile
+makefile
+*.make
