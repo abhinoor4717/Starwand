@@ -22,7 +22,7 @@ project "StarwandEngine"
         "vendor/glad/include",
         "vendor/spdlog/include",
         "vendor/glm",
-        "src/**"
+        "src/StarwandEngine"
     }
 
     defines {

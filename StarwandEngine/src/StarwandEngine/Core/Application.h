@@ -1,7 +1,8 @@
 #pragma once
-#include "Core.h"
+#include "Core/Core.h"
 
-#include "Window.h"
+#include "Core/Window.h"
+#include "Events/Events.h"
 
 namespace Starwand {
     class SW_API Application {
@@ -12,6 +13,7 @@ namespace Starwand {
         void Run();
         void inline Update() {};
         void inline Render() {};
+        void OnEvent(Event& e);
 
         static inline Application& GetInstance() { return *s_instance; }
         inline Window& GetWindow() { return *m_window; } 

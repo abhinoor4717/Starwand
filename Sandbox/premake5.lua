@@ -16,6 +16,7 @@ project "Sandbox"
 
     includedirs {
         "%{wks.location}/StarwandEngine/src",
+        "%{wks.location}/StarwandEngine/src/StarwandEngine",
         "%{wks.location}/StarwandEngine/vendor/spdlog/include",
     }
 
@@ -32,5 +33,3 @@ project "Sandbox"
     filter "configurations:Release"
         runtime "Release"
         optimize "On"
-
-

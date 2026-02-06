@@ -1,8 +1,8 @@
-#include "VertexBuffer.h"
+#include "Graphics/VertexBuffer.h"
 #include "Platform/OpenGL/OpenGLVertexBuffer.h"
 
 #include "Core/Log.h"
-#include "GraphicsAPI.h"
+#include "Graphics/GraphicsAPI.h"
 
 namespace Starwand {
     std::shared_ptr<VertexBuffer> VertexBuffer::Create(const void* data, uint32_t size, BufferUsage usage) {

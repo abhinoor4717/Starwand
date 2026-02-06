@@ -1,9 +1,10 @@
-#include "Input.h"
+#include "Core/Input.h"
 
 #include <glfw/glfw3.h>
-#include <Application.h>
+#include "Core/Application.h"
 
 namespace Starwand {
+
     bool Input::IsKeyDown(Key key) {
         GLFWwindow* win = (GLFWwindow*)Application::GetInstance().GetWindow().GetNativeWindow();
         return glfwGetKey(win, static_cast<int>(key)) == GLFW_PRESS ? true : false;

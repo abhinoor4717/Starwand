@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core.h"
+#include "Core/Core.h"
 #include <iostream>
 #include <string>
 
@@ -10,7 +10,7 @@ namespace Starwand {
 
     enum class SW_API EventType {
         None,
-        WindowClosed, WindowMaximized, WindowMinimized, WindowResized, WindowFocusGained, WindowFocusLost,
+        WindowClosed, WindowMaximized, WindowMinimized, WindowRestored, WindowResized, WindowFocusGained, WindowFocusLost,
         KeyDown, KeyUp,
         MouseButtonDown, MouseButtonUp, MouseMoved, MouseWheel
     };

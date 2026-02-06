@@ -1,4 +1,4 @@
-#include "OpenGLVertexBuffer.h"
+#include "Platform/OpenGL/OpenGLVertexBuffer.h"
 
 #include <stdexcept>
 

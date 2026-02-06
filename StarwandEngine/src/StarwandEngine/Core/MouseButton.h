@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Core.h"
+#include "Core/Core.h"
 
 namespace Starwand {
 
     enum class SW_API MouseButton : int
     {
+        Unknown = -1,
+
         Button0 = 0,
         Button1 = 1,
         Button2 = 2,

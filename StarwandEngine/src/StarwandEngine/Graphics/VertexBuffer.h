@@ -3,7 +3,7 @@
 #include <cstdint>
 #include <memory>
 
-#include "BufferLayout.h"
+#include "Graphics/BufferLayout.h"
 
 namespace Starwand {
 

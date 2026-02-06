@@ -1,5 +1,5 @@
-#include "IndexBuffer.h"
-#include "GraphicsAPI.h"
+#include "Graphics/IndexBuffer.h"
+#include "Graphics/GraphicsAPI.h"
 
 #include "Platform/OpenGL/OpenGLIndexBuffer.h"
 #include "Core/Log.h"

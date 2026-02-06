@@ -1,8 +1,8 @@
 #pragma once
 
 #include <glm/glm.hpp>
-#include "Key.h"
-#include "MouseButton.h"
+#include "Core/Key.h"
+#include "Core/MouseButton.h"
 #include <string>
 
 namespace Starwand {

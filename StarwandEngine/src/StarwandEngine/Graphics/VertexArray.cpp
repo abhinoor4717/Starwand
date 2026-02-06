@@ -1,7 +1,7 @@
-#include "VertexArray.h"
+#include "Graphics/VertexArray.h"
 
 #include "Platform/OpenGL/OpenGLVertexArray.h"
-#include "GraphicsAPI.h"
+#include "Graphics/GraphicsAPI.h"
 #include "Core/Log.h"
 
 namespace Starwand {

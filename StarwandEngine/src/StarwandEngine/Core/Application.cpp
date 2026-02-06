@@ -1,8 +1,8 @@
-#include "Application.h"
+#include "Core/Application.h"
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
-#include "Log.h"
+#include "Core/Log.h"
 
 namespace Starwand {
     Application* Application::s_instance = nullptr;
@@ -21,6 +21,7 @@ namespace Starwand {
         }
 
         m_window = Window::Create(title, width, height);
+        m_window->SetEventCallback([this](Event& e) { this->OnEvent(e); });
 
         // TODO: Initialize glad and rendering logic elsewhere
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -43,8 +44,11 @@ namespace Starwand {
             glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            glfwSwapBuffers(win);
-            glfwPollEvents();
+            m_window->Update();
         }
+    }
+
+    void Application::OnEvent(Event& e) {
+        SWE_TRACE(e);
     }
 }

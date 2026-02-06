@@ -3,8 +3,8 @@
 #include <vector>
 #include <memory>
 
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
+#include "Graphics/VertexBuffer.h"
+#include "Graphics/IndexBuffer.h"
 
 namespace Starwand {
     class VertexArray {
