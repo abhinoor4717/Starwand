@@ -1,5 +1,8 @@
 bin/
 obj/
+.vs
+**.vc
+**.log
 
 # Prerequisites
 *.d
