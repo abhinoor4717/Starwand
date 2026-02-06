@@ -11,6 +11,7 @@ namespace Starwand {
         uint32_t GetWidth() const override;
         uint32_t GetHeight() const override;
         std::string GetTitle() const override;
+        void* GetNativeWindow() const override;
 
     private:
         uint32_t m_width, m_height;

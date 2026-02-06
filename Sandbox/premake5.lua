@@ -15,7 +15,8 @@ project "Sandbox"
     }
 
     includedirs {
-        "%{wks.location}/StarwandEngine/src"
+        "%{wks.location}/StarwandEngine/src",
+        "%{wks.location}/StarwandEngine/vendor/spdlog/include",
     }
 
     filter "system:windows"

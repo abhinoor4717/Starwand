@@ -9,10 +9,11 @@ namespace Starwand {
     public:
         ~Window() = default;
 
-        virtual uint32_t GetWidth() const;
-        virtual uint32_t GetHeight() const;
+        virtual uint32_t GetWidth() const = 0;
+        virtual uint32_t GetHeight() const = 0;
 
-        virtual std::string GetTitle() const;
+        virtual std::string GetTitle() const = 0;
+        virtual void* GetNativeWindow() const = 0;
 
         static std::shared_ptr<Window> Create(const std::string& title, uint32_t width, uint32_t height);
     };
