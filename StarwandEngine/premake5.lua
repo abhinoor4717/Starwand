@@ -13,7 +13,8 @@ project "StarwandEngine"
     links {
         "glad",
         "glfw",
-        "gdi32"
+        "gdi32",
+        "spdlog"
     }
 
     includedirs {
@@ -28,13 +29,19 @@ project "StarwandEngine"
         "SW_BUILD_DLL"
     }
 
+    filter "action:vs**"
+        buildoptions "/utf-8"
+
     filter "system:windows"
+        systemversion "latest"
         defines "SW_PLATFORM_WINDOWS"
         links "winmm"
 
     filter "configurations:Debug"
+        runtime "Debug"
         defines {"SW_DEBUG"}
         symbols "On"
     filter "configurations:Release"
+        runtime "Release"
         defines {"SW_RELEASE", "SW_NDEBUG"}
         optimize "On"

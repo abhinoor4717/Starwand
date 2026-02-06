@@ -19,9 +19,18 @@ project "Sandbox"
         "%{wks.location}/StarwandEngine/vendor/spdlog/include",
     }
 
-    filter "system:windows"
-        defines { "SW_PLATFORM_WINDOWS" }
-
     postbuildcommands {
         "{COPY} %{wks.location}/bin/StarwandEngine/%{cfg.buildcfg}/* %{cfg.targetdir}"
     }
+
+    filter "system:windows"
+        defines { "SW_PLATFORM_WINDOWS" }
+
+    filter "configurations:Debug"
+        runtime "Debug"
+        symbols "On"
+    filter "configurations:Release"
+        runtime "Release"
+        optimize "On"
+
+

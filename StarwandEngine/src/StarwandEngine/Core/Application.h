@@ -14,7 +14,7 @@ namespace Starwand {
         void inline Render() {};
 
         static inline Application& GetInstance() { return *s_instance; }
-        
+        inline Window& GetWindow() { return *m_window; } 
     private:
         std::shared_ptr<Window> m_window;
         bool m_running;
