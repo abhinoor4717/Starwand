@@ -5,6 +5,8 @@
 #include "Core/Log.h"
 #include "Graphics/Renderer.h"
 #include "Events/WindowEvents.h"
+#include <filesystem>
+#include <iostream>
 
 namespace Starwand {
     Application* Application::s_instance = nullptr;
@@ -32,6 +34,11 @@ namespace Starwand {
             exit(-1);
         }
 
+        Renderer::Init();
+
+        SWE_INFO("Hi!");
+
+        m_running = true;
         s_instance = this;
     }
 

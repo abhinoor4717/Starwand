@@ -1,12 +1,46 @@
 #include "Renderer.h"
 #include  "GraphicsAPI.h"
 #include <glad/glad.h>
+#include "Core/Log.h"
+#include "Core/Exceptions.h"
 
 #include "Graphics/VertexArray.h"
 
+#include <fstream>
+#include <string>
+#include <iterator>
+#include <iostream>
+
 namespace Starwand {
+    std::shared_ptr<Shader> Renderer::s_DefaultShader = nullptr;
+
     void Renderer::Init() {
         // TODO: Add dynamic support for multiple graphics api
+
+        std::ifstream vFile(SW_RESOURCES_DIR "/Shaders/vertex.glsl");
+        if (!vFile)
+            SWE_FATAL("Could not open default vertex shader!");
+
+        std::string vertexSource(
+            (std::istreambuf_iterator<char>(vFile)),
+            std::istreambuf_iterator<char>()
+        );
+
+        std::ifstream fFile(SW_RESOURCES_DIR "/Shaders/fragment.glsl");
+        if (!fFile)
+            SWE_FATAL("Could not open default fragment shader!");
+
+        std::string fragmentSource(
+            (std::istreambuf_iterator<char>(fFile)),
+            std::istreambuf_iterator<char>()
+        );
+
+        try {
+            s_DefaultShader = Shader::Create(vertexSource, fragmentSource);
+        }
+        catch (const ShaderException& e) {
+            SWE_ERROR(e.what());
+        }
     }
 
     void Renderer::SetClearColor(float r, float g, float b, float a) {
@@ -39,6 +73,7 @@ namespace Starwand {
         va->AddVertexBuffer(vb);
         va->SetIndexBuffer(ib);
         va->Bind();
+        s_DefaultShader->Bind();
 
         glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr);
     }

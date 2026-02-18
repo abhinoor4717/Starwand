@@ -1,6 +1,7 @@
 project "StarwandEngine"
     kind "SharedLib"
     language "C++"
+    cppdialect "C++23"
     
     targetdir "%{wks.location}/bin/%{prj.name}/%{cfg.buildcfg}"
     objdir "%{wks.location}/obj/%{prj.name}/%{cfg.buildcfg}"
@@ -26,7 +27,8 @@ project "StarwandEngine"
     }
 
     defines {
-        "SW_BUILD_DLL"
+        "SW_BUILD_DLL",
+        "SW_RESOURCES_DIR=\"" .. path.getabsolute("Resources") .. "\""
     }
 
     filter "action:vs**"

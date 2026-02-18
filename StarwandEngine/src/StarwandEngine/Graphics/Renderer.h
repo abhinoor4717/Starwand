@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Core.h"
+#include "Graphics/Shader.h"
 
 namespace Starwand {
     class SW_API Renderer {
@@ -11,5 +12,8 @@ namespace Starwand {
         static void Clear();
 
         static void DrawRect();
+
+    private:
+        static std::shared_ptr<Shader> s_DefaultShader;
     };
 }
