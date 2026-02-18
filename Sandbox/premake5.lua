@@ -26,6 +26,7 @@ project "Sandbox"
 
     filter "system:windows"
         defines { "SW_PLATFORM_WINDOWS" }
+        buildoptions "/utf-8"
 
     filter "configurations:Debug"
         runtime "Debug"
