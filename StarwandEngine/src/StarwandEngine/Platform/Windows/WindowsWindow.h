@@ -20,8 +20,6 @@ namespace Starwand {
         void SetEventCallback(EventCallbackFn callback);
 
     private:
-        uint32_t m_width, m_height;
-        std::string m_title;
         GLFWwindow* m_glfwWindow;
         WindowData m_windowData;
     };

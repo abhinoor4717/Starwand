@@ -50,6 +50,8 @@ namespace Starwand {
         static EventType GetStaticType() { return EventType::WindowResized; }
         EventType GetEventType() const { return GetStaticType(); }
         std::string ToString() const { return "WindowResizedEvent: " + std::to_string(m_Width) + ", " + std::to_string(m_Height); }
+        inline uint32_t GetWidth() { return m_Width; }
+        inline uint32_t GetHeight() { return m_Height; }
         WindowResizedEvent(int w, int h)
             : m_Width(w), m_Height(h) {}
     private:

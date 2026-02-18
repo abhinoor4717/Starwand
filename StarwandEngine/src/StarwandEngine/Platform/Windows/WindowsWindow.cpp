@@ -7,8 +7,7 @@
 #include "Core/Input.h"
 
 namespace Starwand {
-    WindowsWindow::WindowsWindow(const std::string& title, uint32_t width, uint32_t height)
-        : m_title(title), m_width(width), m_height(height) {
+    WindowsWindow::WindowsWindow(const std::string& title, uint32_t width, uint32_t height) {
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -32,6 +31,8 @@ namespace Starwand {
         });
         glfwSetWindowSizeCallback(m_glfwWindow, [](GLFWwindow* win, int w, int h) {
             WindowData* data = (WindowData*)glfwGetWindowUserPointer(win);
+            data->Width = w;
+            data->Height = h;
             WindowResizedEvent e(w, h);
             data->EventCallback(e);
         });
@@ -116,9 +117,9 @@ namespace Starwand {
         glfwPollEvents();
     }
 
-    uint32_t WindowsWindow::GetWidth() const { return m_width; }
-    uint32_t WindowsWindow::GetHeight() const { return m_height; }
-    std::string WindowsWindow::GetTitle() const { return m_title; }
+    uint32_t WindowsWindow::GetWidth() const { return m_windowData.Width; }
+    uint32_t WindowsWindow::GetHeight() const { return m_windowData.Height; }
+    std::string WindowsWindow::GetTitle() const { return m_windowData.Title; }
     void* WindowsWindow::GetNativeWindow() const { return (void*)m_glfwWindow; }
     void WindowsWindow::SetEventCallback(std::function<void(Event&)> callback) {
         m_windowData.EventCallback = callback;

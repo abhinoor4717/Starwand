@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 #include "Core/Log.h"
+#include "Graphics/Renderer.h"
+#include "Events/WindowEvents.h"
 
 namespace Starwand {
     Application* Application::s_instance = nullptr;
@@ -40,15 +42,23 @@ namespace Starwand {
 
     void Application::Run() {
         auto win = (GLFWwindow*)m_window->GetNativeWindow();
-        while (!glfwWindowShouldClose(win)) {
-            glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-            glClear(GL_COLOR_BUFFER_BIT);
+        while (m_running) {
+            Renderer::SetClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+            Renderer::Clear();
+
+            Renderer::DrawRect();
 
             m_window->Update();
         }
     }
 
     void Application::OnEvent(Event& e) {
-        SWE_TRACE(e);
+        if (e.GetEventType() == EventType::WindowClosed) {
+            m_running = false;
+        }
+        else if (e.GetEventType() == EventType::WindowResized) {
+            auto winEvent = ConvertEvent<WindowResizedEvent>(e);
+            glViewport(0, 0, winEvent->GetWidth(), winEvent->GetHeight());
+        }
     }
 }

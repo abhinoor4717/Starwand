@@ -52,6 +52,9 @@ namespace Starwand {
             case Key::D8: return "8";
             case Key::D9: return "9";
 
+            case Key::Semicolon: return ";";
+            case Key::Equal: return "=";
+
             case Key::A: return "A";
             case Key::B: return "B";
             case Key::C: return "C";
@@ -79,23 +82,37 @@ namespace Starwand {
             case Key::Y: return "Y";
             case Key::Z: return "Z";
 
-            case Key::Escape:     return "Escape";
-            case Key::Enter:      return "Enter";
-            case Key::Tab:        return "Tab";
-            case Key::Backspace:  return "Backspace";
-            case Key::Insert:     return "Insert";
-            case Key::Delete:     return "Delete";
-            case Key::Right:      return "Right Arrow";
-            case Key::Left:       return "Left Arrow";
-            case Key::Down:       return "Down Arrow";
-            case Key::Up:         return "Up Arrow";
+            case Key::LeftBracket:  return "[";
+            case Key::Backslash:    return "\\";
+            case Key::RightBracket: return "]";
+            case Key::GraveAccent:  return "`";
 
-            case Key::LeftShift:   return "Left Shift";
-            case Key::LeftControl: return "Left Ctrl";
-            case Key::LeftAlt:     return "Left Alt";
-            case Key::RightShift:  return "Right Shift";
-            case Key::RightControl:return "Right Ctrl";
-            case Key::RightAlt:    return "Right Alt";
+            case Key::Escape:       return "Escape";
+            case Key::Enter:        return "Enter";
+            case Key::Tab:          return "Tab";
+            case Key::Backspace:    return "Backspace";
+            case Key::Insert:       return "Insert";
+            case Key::Delete:       return "Delete";
+            case Key::Right:        return "Right Arrow";
+            case Key::Left:         return "Left Arrow";
+            case Key::Down:         return "Down Arrow";
+            case Key::Up:           return "Up Arrow";
+            case Key::PageUp:       return "Page Up";
+            case Key::PageDown:     return "Page Down";
+            case Key::Home:         return "Home";
+            case Key::End:          return "End";
+            case Key::CapsLock:     return "Caps Lock";
+            case Key::ScrollLock:   return "Scroll Lock";
+            case Key::NumLock:      return "Num Lock";
+            case Key::PrintScreen:  return "Print Screen";
+            case Key::Pause:        return "Pause";
+
+            case Key::LeftShift:    return "Left Shift";
+            case Key::LeftControl:  return "Left Ctrl";
+            case Key::LeftAlt:      return "Left Alt";
+            case Key::RightShift:   return "Right Shift";
+            case Key::RightControl: return "Right Ctrl";
+            case Key::RightAlt:     return "Right Alt";
 
             case Key::F1:  return "F1";
             case Key::F2:  return "F2";
@@ -109,6 +126,21 @@ namespace Starwand {
             case Key::F10: return "F10";
             case Key::F11: return "F11";
             case Key::F12: return "F12";
+            case Key::F13: return "F13";
+            case Key::F14: return "F14";
+            case Key::F15: return "F15";
+            case Key::F16: return "F16";
+            case Key::F17: return "F17";
+            case Key::F18: return "F18";
+            case Key::F19: return "F19";
+            case Key::F20: return "F20";
+            case Key::F21: return "F21";
+            case Key::F22: return "F22";
+            case Key::F23: return "F23";
+            case Key::F24: return "F24";
+            case Key::F25: return "F25";
+
+            // TODO: Add the rest of the missing keys
 
             default:
                 return "Unknown Key";
