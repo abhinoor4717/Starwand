@@ -23,4 +23,9 @@ namespace Starwand {
 	public:
 		explicit ShaderLinkException(const std::string& message) : ShaderException(message) {}
 	};
+
+	class InvalidShaderUniformException : public ShaderException {
+	public:
+		explicit InvalidShaderUniformException(const std::string& message) : ShaderException(message) {}
+	};
 }

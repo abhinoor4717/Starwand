@@ -1,6 +1,7 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 #include <iostream>
 #include <fstream>
 #include <iterator>
@@ -62,12 +63,27 @@ namespace Starwand {
     }
 
     void OpenGLShader::SetInt(const std::string& name, int val) {
-        
+        GLuint loc = glGetUniformLocation(m_rendererId, name.c_str());
+        if (loc == -1) {
+            throw InvalidShaderUniformException("Could not find uniform with name: " + name);
+        }
+
+        glUniform1i(loc, val);
     }
     void OpenGLShader::SetFloat(const std::string& name, float val) {
+        GLuint loc = glGetUniformLocation(m_rendererId, name.c_str());
+        if (loc == -1) {
+            throw InvalidShaderUniformException("Could not find uniform with name: " + name);
+        }
 
+        glUniform1f(loc, val);
     }
     void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& value) {
+        GLuint loc = glGetUniformLocation(m_rendererId, name.c_str());
+        if (loc == -1) {
+            throw InvalidShaderUniformException("Could not find uniform with name: " + name);
+        }
 
+        glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
     }
 }

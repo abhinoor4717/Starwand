@@ -36,8 +36,6 @@ namespace Starwand {
 
         Renderer::Init();
 
-        SWE_INFO("Hi!");
-
         m_running = true;
         s_instance = this;
     }

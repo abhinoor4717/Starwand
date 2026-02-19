@@ -53,10 +53,11 @@ namespace Starwand {
 
     void Renderer::DrawRect() {
         float vertices[] = {
-            -0.5f, -0.5f, // Bottom Left
-            0.5f, -0.5f,  // Bottom Right
-            0.5f, 0.5f,    // Top right
-            -0.5f, 0.5f  // Top left
+            // Position                 Color
+            -0.5f, -0.5f, 1.0f,     1.0f, 0.0f, 0.0f, // Bottom Left
+            0.5f, -0.5f, 1.0f,      0.0f, 1.0f, 0.0f,// Bottom Right
+            0.5f, 0.5f, 1.0f,       0.0f, 0.0f, 1.0f, // Top right
+            -0.5f, 0.5f, 1.0f,      1.0f, 1.0f, 1.0f// Top left
         };
 
         uint32_t indices[] = {
@@ -68,7 +69,8 @@ namespace Starwand {
         auto vb = VertexBuffer::Create(vertices, sizeof(vertices), BufferUsage::Static);
         auto ib = IndexBuffer::Create(indices, sizeof(indices));
         vb->SetLayout(BufferLayout({
-            BufferElement(ShaderDataType::Float2, "position",  false)
+            BufferElement(ShaderDataType::Float3, "Position",  false),
+            BufferElement(ShaderDataType::Float3, "Color",  false)
         }));
         va->AddVertexBuffer(vb);
         va->SetIndexBuffer(ib);
