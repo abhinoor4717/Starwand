@@ -1,21 +1,25 @@
-#include "Renderer.h"
-#include  "GraphicsAPI.h"
-#include <glad/glad.h>
-#include "Core/Log.h"
 #include "Core/Exceptions.h"
+#include "Core/Log.h"
+#include  "GraphicsAPI.h"
+#include "Renderer.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 #include "Graphics/VertexArray.h"
 
+#include "Graphics/RenderCommand.h"
+
 #include <fstream>
-#include <string>
-#include <iterator>
 #include <iostream>
+#include <iterator>
+#include <string>
 
 namespace Starwand {
     std::shared_ptr<Shader> Renderer::s_DefaultShader = nullptr;
 
     void Renderer::Init() {
-        // TODO: Add dynamic support for multiple graphics api
+        
+        GraphicsAPI::Initalize();
 
         std::ifstream vFile(SW_RESOURCES_DIR "/Shaders/vertex.glsl");
         if (!vFile)
@@ -44,11 +48,11 @@ namespace Starwand {
     }
 
     void Renderer::SetClearColor(float r, float g, float b, float a) {
-        glClearColor(r, g, b, a);
+        RenderCommand::SetClearColor(r, g, b, a);
     }
 
     void Renderer::Clear() {
-        glClear(GL_COLOR_BUFFER_BIT);
+        RenderCommand::Clear();
     }
 
     void Renderer::DrawRect() {
@@ -74,9 +78,8 @@ namespace Starwand {
         }));
         va->AddVertexBuffer(vb);
         va->SetIndexBuffer(ib);
-        va->Bind();
         s_DefaultShader->Bind();
 
-        glDrawElements(GL_TRIANGLES, ib->GetCount(), GL_UNSIGNED_INT, nullptr);
+        RenderCommand::DrawIndexed(va);
     }
 }

@@ -1,14 +1,14 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 
+#include <fstream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
 #include <iostream>
-#include <fstream>
 #include <iterator>
 #include <stdexcept>
 
-#include "Core/Log.h"
 #include "Core/Exceptions.h"
+#include "Core/Log.h"
 
 namespace Starwand {
     OpenGLShader::OpenGLShader(const std::string& vertSrc, const std::string& fragSrc) {

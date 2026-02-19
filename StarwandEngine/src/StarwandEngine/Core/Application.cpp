@@ -4,6 +4,7 @@
 #include <glfw/glfw3.h>
 #include "Core/Log.h"
 #include "Graphics/Renderer.h"
+#include "Graphics/RenderCommand.h"
 #include "Events/WindowEvents.h"
 #include <filesystem>
 #include <iostream>
@@ -27,13 +28,6 @@ namespace Starwand {
         m_window = Window::Create(title, width, height);
         m_window->SetEventCallback([this](Event& e) { this->OnEvent(e); });
 
-        // TODO: Initialize glad and rendering logic elsewhere
-        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-            SWE_FATAL("GLAD failed to initalize!");
-            glfwTerminate();
-            exit(-1);
-        }
-
         Renderer::Init();
 
         m_running = true;
@@ -46,7 +40,6 @@ namespace Starwand {
     }
 
     void Application::Run() {
-        auto win = (GLFWwindow*)m_window->GetNativeWindow();
         while (m_running) {
             Renderer::SetClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             Renderer::Clear();
@@ -63,7 +56,7 @@ namespace Starwand {
         }
         else if (e.GetEventType() == EventType::WindowResized) {
             auto winEvent = ConvertEvent<WindowResizedEvent>(e);
-            glViewport(0, 0, winEvent->GetWidth(), winEvent->GetHeight());
+            RenderCommand::SetViewport(0, 0, winEvent->GetWidth(), winEvent->GetHeight());
         }
     }
 }

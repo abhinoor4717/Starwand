@@ -8,7 +8,8 @@ project "StarwandEngine"
 
     files {
         "src/**.h",
-        "src/**.cpp"
+        "src/**.cpp",
+        "vendor/stb_image/stb_image.cpp"
     }
 
     links {
@@ -23,12 +24,17 @@ project "StarwandEngine"
         "vendor/glad/include",
         "vendor/spdlog/include",
         "vendor/glm",
+        "vendor/stb_image",
         "src/StarwandEngine"
     }
 
     defines {
         "SW_BUILD_DLL",
         "SW_RESOURCES_DIR=\"" .. path.getabsolute("Resources") .. "\""
+    }
+
+    postbuildcommands {
+        "{COPY} %{cfg.targetdir}/* %{wks.location}/bin/Sandbox/%{cfg.buildcfg}",
     }
 
     filter "action:vs**"
