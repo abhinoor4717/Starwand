@@ -18,6 +18,7 @@ project "Sandbox"
         "%{wks.location}/StarwandEngine/src",
         "%{wks.location}/StarwandEngine/src/StarwandEngine",
         "%{wks.location}/StarwandEngine/vendor/spdlog/include",
+        "%{wks.location}/StarwandEngine/vendor/glm",
     }
 
     postbuildcommands {

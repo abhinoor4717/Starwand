@@ -11,8 +11,8 @@ namespace Starwand {
         ~Application();
 
         void Run();
-        void inline Update() {};
-        void inline Render() {};
+        virtual void inline Update() {};
+        virtual void inline Render() {};
         void OnEvent(Event& e);
 
         static inline Application& GetInstance() { return *s_instance; }

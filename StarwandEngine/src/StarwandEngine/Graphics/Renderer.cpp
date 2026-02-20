@@ -6,6 +6,7 @@
 #include <GLFW/glfw3.h>
 
 #include "Graphics/VertexArray.h"
+#include "Graphics/Texture2D.h"
 
 #include "Graphics/RenderCommand.h"
 
@@ -16,6 +17,8 @@
 
 namespace Starwand {
     std::shared_ptr<Shader> Renderer::s_DefaultShader = nullptr;
+
+    std::shared_ptr<Texture2D> texture = nullptr;
 
     void Renderer::Init() {
         
@@ -45,6 +48,8 @@ namespace Starwand {
         catch (const ShaderException& e) {
             SWE_ERROR(e.what());
         }
+
+        texture = Texture2D::Create(SW_RESOURCES_DIR "/images/sample.png");
     }
 
     void Renderer::SetClearColor(float r, float g, float b, float a) {
@@ -56,29 +61,37 @@ namespace Starwand {
     }
 
     void Renderer::DrawRect() {
-        float vertices[] = {
-            // Position                 Color
-            -0.5f, -0.5f, 1.0f,     1.0f, 0.0f, 0.0f, // Bottom Left
-            0.5f, -0.5f, 1.0f,      0.0f, 1.0f, 0.0f,// Bottom Right
-            0.5f, 0.5f, 1.0f,       0.0f, 0.0f, 1.0f, // Top right
-            -0.5f, 0.5f, 1.0f,      1.0f, 1.0f, 1.0f// Top left
+        static float vertices[] = {
+            // Position                 Color                   UV          UseTex
+            -0.5f, -0.5f, 1.0f,     1.0f, 0.0f, 0.0f,       0.0f, 0.0f,     1.0f,      // Bottom Left
+            0.5f, -0.5f, 1.0f,      0.0f, 1.0f, 0.0f,       1.0f, 0.0f,     1.0f,      // Bottom Right
+            0.5f, 0.5f, 1.0f,       0.0f, 0.0f, 1.0f,       1.0f, 1.0f,     1.0f,      // Top right
+            -0.5f, 0.5f, 1.0f,      1.0f, 1.0f, 1.0f,       0.0f, 1.0f,     1.0f,      // Top left
         };
 
-        uint32_t indices[] = {
+        static uint32_t indices[] = {
             0, 1, 2,
-            0, 2, 3
+            2, 3, 0
         };
 
-        auto va = VertexArray::Create();
-        auto vb = VertexBuffer::Create(vertices, sizeof(vertices), BufferUsage::Static);
-        auto ib = IndexBuffer::Create(indices, sizeof(indices));
+        static auto va = VertexArray::Create();
+        static auto vb = VertexBuffer::Create(vertices, sizeof(vertices), BufferUsage::Static);
+        static auto ib = IndexBuffer::Create(indices, sizeof(indices));
         vb->SetLayout(BufferLayout({
             BufferElement(ShaderDataType::Float3, "Position",  false),
-            BufferElement(ShaderDataType::Float3, "Color",  false)
+            BufferElement(ShaderDataType::Float3, "Color",  false),
+            BufferElement(ShaderDataType::Float2, "UV",  false),
+            BufferElement(ShaderDataType::Float, "UseTexture",  false),
+
         }));
         va->AddVertexBuffer(vb);
         va->SetIndexBuffer(ib);
         s_DefaultShader->Bind();
+        
+        glActiveTexture(GL_TEXTURE0);
+        texture->Bind();
+
+        s_DefaultShader->SetInt("sampler", 0);
 
         RenderCommand::DrawIndexed(va);
     }

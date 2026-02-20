@@ -44,7 +44,8 @@ namespace Starwand {
             Renderer::SetClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             Renderer::Clear();
 
-            Renderer::DrawRect();
+            Update();
+            Render();
 
             m_window->Update();
         }
